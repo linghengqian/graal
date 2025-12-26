@@ -125,6 +125,7 @@ public class JDKInitializationFeature implements InternalFeature {
         rci.initializeAtBuildTime("sun.nio", JDK_CLASS_REASON);
         if (Platform.includedIn(InternalPlatform.WINDOWS_BASE.class)) {
             rci.initializeAtRunTime("sun.nio.ch.PipeImpl", "Contains SecureRandom reference, therefore can't be included in the image heap");
+            rci.initializeAtRunTime("com.sun.jndi.dns", "DNS provider must observe the runtime Windows networking configuration");
         }
 
         rci.initializeAtRunTime("sun.net.PortConfig", "Calls PortConfig.getLower0() and PortConfig.getUpper0()");
