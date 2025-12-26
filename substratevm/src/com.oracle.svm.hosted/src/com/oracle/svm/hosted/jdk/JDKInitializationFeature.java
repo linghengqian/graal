@@ -234,6 +234,10 @@ public class JDKInitializationFeature implements InternalFeature {
         rci.initializeAtBuildTime("sun.security.validator", JDK_CLASS_REASON);
         rci.initializeAtBuildTime("sun.security.x509", JDK_CLASS_REASON);
         rci.initializeAtBuildTime("com.sun.jndi", JDK_CLASS_REASON);
+        if (Platform.includedIn(InternalPlatform.WINDOWS_BASE.class)) {
+            /* DnsClient is already runtime-initialized; keep the rest of the DNS provider runtime on Windows too. */
+            rci.initializeAtRunTime("com.sun.jndi.dns", "DNS provider must observe the runtime Windows networking configuration");
+        }
         if (FutureDefaultsOptions.securityProvidersInitializedAtRunTime()) {
             rci.initializeAtRunTime("sun.security.ssl.SSLContextImpl", JDK_CLASS_REASON);
             rci.initializeAtRunTime("sun.security.ssl.SSLAlgorithmConstraints", JDK_CLASS_REASON);
