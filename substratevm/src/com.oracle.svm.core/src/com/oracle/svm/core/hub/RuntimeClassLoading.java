@@ -155,7 +155,9 @@ public class RuntimeClassLoading {
                       1) Modify or reconfigure your application (or a third-party library) so that it does not generate classes at runtime or load them via non-built-in class loaders.
                       2) If the classes must be generated, try to generate them at build time in a static initializer of a dedicated class.\
                      The generated java.lang.Class objects should be stored in static fields and the dedicated class initialized by passing '--initialize-at-build-time=<class_name>' as the build argument.
-                      3) If none of the above is applicable, use the tracing agent to run this application and collect predefined classes with\
+                      3) If runtime class loading is unavoidable, try the experimental support by building with '-H:+RuntimeClassLoading'.\
+                     This requires isolate support and may impose additional overhead at run time.
+                      4) If none of the above is applicable, use the tracing agent to run this application and collect predefined classes with\
                      'java -agentlib:native-image-agent=config-output-dir=<config-dir>,experimental-class-define-support <application-arguments>'.\
                      Note that this is an experimental feature and that it does not guarantee success. Furthermore, the resulting classes can contain entries\
                      from the classpath that should be manually filtered out to reduce image size. The agent should be used only in cases where modifying the source of the project is not possible.
